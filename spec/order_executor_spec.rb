@@ -44,30 +44,4 @@ describe OrderExecutor do
     mock(seller).move_stocks(buyer, 'A', 10, 1)
     OrderExecutor.new(order).confirm confirmation
   end
-
-  describe 'recognizes buyer and seller properly' do
-    it 'in case of buy order' do
-      order = BuyOrder.new('A', 10, 1)
-      stub(order).user { buyer }
-      stub(confirmation).user { seller }
-
-      executor = OrderExecutor.new(order)
-      executor.confirm confirmation
-
-      executor.buyer.must_equal order.user
-      executor.seller.must_equal confirmation.user
-    end
-
-    it 'in case of sell order' do
-      order = SellOrder.new('A', 10, 1)
-      stub(order).user { seller }
-      stub(confirmation).user { buyer }
-
-      executor = OrderExecutor.new(order)
-      executor.confirm confirmation
-
-      executor.buyer.must_equal confirmation.user
-      executor.seller.must_equal order.user
-    end
-  end
 end
