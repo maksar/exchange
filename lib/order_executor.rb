@@ -10,13 +10,12 @@ class OrderExecutor
 
   def initialize order
     @order = order
-    @parties_determiner = PartiesDeterminer.new(order)
   end
 
-  def confirm confirmation
+  def confirm confirmation, parties_determiner = PartiesDeterminer.new(order)
     raise TooManyStocksRequested.new if confirmation.count > order.count
 
-    @seller, @buyer = @parties_determiner.resolve(confirmation)
+    @seller, @buyer = parties_determiner.resolve(confirmation)
 
     raise ImpossibleToSelfSell.new if buyer == seller
     raise NotEnoughFunds.new if buyer.funds < order.cost
