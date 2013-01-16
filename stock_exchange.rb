@@ -1,17 +1,11 @@
 require_relative 'lib/order_executor'
 
-# CONFIRMATION_QUEUE = Queue.new
+CONFIRMATION_QUEUE = Queue.new
 
-def start
-  Thread.new do
-    queue.pop do |confirmation|
-      process_confirmation confirmation
-    end
+def process_confirmations queue = CONFIRMATION_QUEUE
+  while !queue.empty? do
+    OrderExecutor.new(queue.pop(true)).execute
   end
-end
-
-def process_confirmation confirmation
-  OrderExecutor.new(confirmation).execute
 end
 
 start if __FILE__ == $0
