@@ -4,8 +4,14 @@ CONFIRMATION_QUEUE = Queue.new
 
 def process_confirmations queue = CONFIRMATION_QUEUE
   while !queue.empty? do
-    OrderExecutor.new(queue.pop(true)).execute
+    process_confirmation queue.pop(true)
   end
+end
+
+def process_confirmation confirmation
+  OrderExecutor.new(confirmation).execute
+rescue Exception => e
+  # Do nothing for now
 end
 
 start if __FILE__ == $0

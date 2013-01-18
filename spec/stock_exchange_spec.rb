@@ -8,11 +8,10 @@ describe 'main flow' do
     let(:seller) { User.new Wallet.new(0.0), Portfolio.new([Stock.new('APPL', 100)]) }
     let(:buyer) { User.new Wallet.new(10000.0), Portfolio.new([]) }
 
-    let(:order) { SellOrder.new(seller, 'APPL', 100, 100.0) }
-
     before {
-      CONFIRMATION_QUEUE << Confirmation.new(buyer, order, 49)
-      CONFIRMATION_QUEUE << Confirmation.new(buyer, order, 3)
+      CONFIRMATION_QUEUE << Confirmation.new(buyer, SellOrder.new(seller, 'APPL', 100, 100.0), 49)
+      CONFIRMATION_QUEUE << Confirmation.new(seller, BuyOrder.new(buyer, 'APPL', 100, 100.0), 3)
+      CONFIRMATION_QUEUE << Confirmation.new(seller, Order.new(buyer, 'APPL', 100, 100.0), 0)
     }
 
     it 'properly processes confirmations' do
