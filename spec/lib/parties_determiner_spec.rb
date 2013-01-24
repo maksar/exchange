@@ -25,7 +25,7 @@ describe PartiesDeterminer do
   end
 
   it 'reports about unknown order type' do
-    confirmation.order = Order.new
+    confirmation.order = Order.new nil, nil, nil, nil
     -> { PartiesDeterminer.new(confirmation).resolve }.must_raise UnknownOrderType
   end
 end

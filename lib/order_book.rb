@@ -13,11 +13,9 @@ class OrderBook
     @orders.detect {|o| o.id == id }
   end
 
-
   def add order
     @orders << order
-    order.id = next_sequence
-    notify_add [order]
+    order.id = next_sequence.tap { notify_add [order] }
   end
 
   def delete order
@@ -25,8 +23,8 @@ class OrderBook
     notify_remove [order]
   end
 
-  private 
-  
+  private
+
   def next_sequence
     @next_sequence ||= 0
     @next_sequence += 1

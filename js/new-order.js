@@ -2,7 +2,7 @@ $(function() {
   $(".currency").kendoNumericTextBox({format: "c"});
   $(".amount").kendoNumericTextBox({format: "0"});
 
-  kendo.bind($('#window'), kendo.observable({
+  newOrderViewModel = kendo.observable({
     type: null,
     stock: null,
     count: null,
@@ -21,6 +21,7 @@ $(function() {
         $('#window').data("kendoWindow").close();
       }
     }
-  }));
+  });
+  kendo.bind($('#window'), newOrderViewModel);
 });
 
