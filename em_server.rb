@@ -13,8 +13,8 @@ EventMachine.run {
 
   @orders_channel = EM::Channel.new
 
-  @order_book.subscribe_add { |change| @orders_channel.push({add: change, remove: []}.to_json) }
-  @order_book.subscribe_remove { |change| @orders_channel.push({remove: change, add: []}.to_json) }
+  @order_book.subscribe_add ->(change) { @orders_channel.push({add: change, remove: []}.to_json) }
+  @order_book.subscribe_remove ->(change) { @orders_channel.push({remove: change, add: []}.to_json) }
 
   EventMachine::WebSocket.start(:host => "0.0.0.0", :port => 8080, :debug => true) do |ws|
 
