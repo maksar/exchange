@@ -1,10 +1,8 @@
 require_relative 'lib/order_executor'
 
-CONFIRMATION_QUEUE = Queue.new
-
-def process_confirmations queue = CONFIRMATION_QUEUE
-  while !queue.empty? do
-    process_confirmation queue.pop(true)
+def process_confirmations queue
+  while queue.size > 0 do
+    process_confirmation queue.pop
   end
 end
 

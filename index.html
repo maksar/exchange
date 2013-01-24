@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stock Exchange</title>
+
+  <script src="js/reconnecting-websocket.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/kendo.web.min.js"></script>
+
+  <script src="js/new-order.js"></script>
+  <script src="js/orders-list.js"></script>
+  <script src="js/web-sockets.js"></script>
+
+  <link href="css/kendo.common.min.css" rel="stylesheet" />
+  <link href="css/kendo.bootstrap.min.css" rel="stylesheet" />
+  <link href="css/examples.css" rel="stylesheet" />
+
+  <link href="css/custom.css" rel="stylesheet" />
+</head>
+<body>
+
+  <div id="window" style="display:none">
+    <form>
+      <table>
+        <tr><td><label for="type">Order Type:</label></td><td><span id="type" data-bind="text: orderType"></td></tr>
+        <tr><td><label for="stock">Stock:</label></td><td><input data-bind="value: stock" placeholder="Enter Name" type="text" pattern="[A-Z]+" validationMessage="stock should be capital letters" required/></td></tr>
+        <tr><td><label for="count">Amount:</label></td><td><input data-bind="value: count" placeholder="Enter Amount" type="number" step="1" class="amount" min='1' name="count" required/><span class="k-invalid-msg" data-for="count"></span></td></tr>
+        <tr><td><label for="price">Price:</label></td><td><input data-bind="value: price" placeholder="Enter Price" type="number" step="1" class="currency" min='0.01' name="price" required/><span class="k-invalid-msg" data-for="price"></span></td></tr>
+      </table>
+    </form>
+    <button class="k-button" id="create_order" data-bind="click: createOrder">Create</button>
+  </div>
+
+  <div id="example" class="k-content centerWrap">
+    <div class="demo-section">
+      <table id="orders" class="metrotable">
+        <thead>
+          <tr>
+            <th>Order Type</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th>Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody data-template="row-template" data-bind="source: orders"></tbody>
+      </table>
+
+    </div>
+    <button class="k-button" data-bind="click: addOrder" data-type="sell">Ask</button>
+    <button class="k-button" data-bind="click: addOrder" data-type="buy">Bid</button>
+  </div>
+</body>
+
+<script id="row-template" type="text/x-kendo-template">
+<tr>
+<td data-bind="text: formattedOrderType"/>
+<td data-bind="text: stock"/>
+<td data-bind="text: formattedPrice"/>
+<td data-bind="text: count"/>
+<td><button class="k-button" data-bind="click: action, text: formattedActionName"></button></td>
+</tr>
+</script>
+
+<script>
+
+window.currentUser = 'maksar'
+
+function formatOrderType(type) {
+  switch (type) {
+    case 'sell': return 'Ask';
+    case 'buy': return 'Bid';
+  }
+}
+
+function formatActionName(user, type) {
+  if (user == currentUser) {
+    return 'Cancel';
+  }
+  switch (type) {
+    case 'sell': return 'Buy';
+    case 'buy': return 'Sell';
+  }
+}
+
+</script>
+</html>

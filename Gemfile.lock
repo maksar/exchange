@@ -1,7 +1,12 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.3.2)
     coderay (1.0.8)
+    em-websocket (0.3.8)
+      addressable (>= 2.1.1)
+      eventmachine (>= 0.12.9)
+    eventmachine (1.0.0)
     method_source (0.8.1)
     minitest (4.4.0)
     minitest-ci (2.4.0)
@@ -22,6 +27,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  em-websocket
   minitest
   minitest-ci
   pry

@@ -10,3 +10,4 @@ class SellProcess < Struct.new :seller, :buyer, :confirmation
     money_mover.move confirmation.count * confirmation.order.price
   end
 end
+

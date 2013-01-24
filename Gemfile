@@ -5,3 +5,5 @@ gem 'simplecov'
 gem 'pry'
 gem 'minitest'
 gem 'minitest-ci'
+
+gem 'em-websocket'

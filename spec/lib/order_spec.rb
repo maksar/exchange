@@ -9,4 +9,10 @@ describe Order do
     order.count.must_equal 10
     order.price.must_equal 1
   end
+
+  it 'should have assignable id' do
+    order = Order.new
+    order.id = 123
+    order.id.must_equal 123
+  end
 end
