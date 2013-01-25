@@ -6,4 +6,6 @@ gem 'pry'
 gem 'minitest'
 gem 'minitest-ci'
 
+gem 'rake'
+
 gem 'em-websocket'
