@@ -1,5 +1,5 @@
 $(function() {
-  ws = new ReconnectingWebSocket("ws://<%= Socket.gethostname %>:8080/ws");
+  ws = new ReconnectingWebSocket("ws://" + location.hostname + ":8080/ws");
   ws.onclose = function(e) {
     viewModel.set('orders', []);
   }

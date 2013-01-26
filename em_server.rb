@@ -16,7 +16,7 @@ EventMachine.run {
   @order_book.subscribe_add ->(change) { @orders_channel.push Change.new(change).add }
   @order_book.subscribe_remove ->(change) { @orders_channel.push Change.new(change).remove }
 
-  EventMachine::WebSocket.start(host: Socket.gethostname, port: 8080, debug: true) do |ws|
+  EventMachine::WebSocket.start(host: '0.0.0.0', port: 8080, debug: true) do |ws|
     ws.onopen {
       sid = @orders_channel.subscribe { |msg| ws.send msg }
       ws.onclose {
