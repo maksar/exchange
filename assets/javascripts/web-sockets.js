@@ -1,20 +1,15 @@
 $(function() {
   ws = new ReconnectingWebSocket("ws://" + location.hostname + ":8080/ws");
   ws.onclose = function(e) {
-    viewModel.set('orders', []);
+    ordersTable.clearOrders();
   }
   ws.onmessage = function(evt) {
     var data = JSON.parse(evt.data);
     for (var item in data.add) {
-      viewModel.get('orders').push(data.add[item]);
-      viewModel.set('orders', viewModel.get('orders'));
+      ordersTable.pushOrder(data.add[item]);
     }
     for (var item in data.remove) {
-      for (var elem in viewModel.get('orders')) {
-        if (viewModel.get('orders')[elem].id == data.remove[item].id) {
-          viewModel.get('orders').splice(elem, 1);
-        }
-      }
+      ordersTable.removeOrder(data.remove[item]);
     }
   }
 

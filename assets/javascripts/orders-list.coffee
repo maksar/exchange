@@ -1,5 +1,5 @@
 class OrdersTable
-  constructor: (@table, @socket, @viewModel) ->
+  constructor: (@table, @createOrderMediator, @confirmOrderMediator, @viewModel) ->
     @bindControls()
     @bindHandlers()
 
@@ -10,29 +10,37 @@ class OrdersTable
 
   bindHandlers: -> @viewModel.action = @action
 
-  action: (e) => @socket.send @serialize e
+  action: (e) =>
+    return @cancelOrder e.data if e.data.get('user') == window.currentUser
+    @confirmOrderMediator.setOrder e.data
+    @confirmOrderMediator.openWindow()
 
   addOrder: (e) =>
-    orderForm.viewModel.set 'type', $(e.target).data('type')
-    orderForm.viewModel.set 'stock', null
-    orderForm.viewModel.set 'count', null
-    orderForm.viewModel.set 'price', null
+    @createOrderMediator.resetViewModel $(e.target).data('type')
+    @createOrderMediator.openWindow()
 
-    orderWindow.open()
+  cancelOrder: (order) ->
+    window.ws.send JSON.stringify
+      action: formatActionName(order.get('user'), order.get('type')).toLowerCase()
+      params:
+        id: order.get('id')
+        user: window.currentUser
 
-  serialize: (e) -> JSON.stringify
-    action: formatActionName(e.data.user, e.data.type).toLowerCase()
-    params:
-      id: e.data.id
-      user: window.currentUser
+  serialize: (e) ->
 
-class OrdersListViewModel extends kendo.data.ObservableObject
-  constructor: -> super @
-  orders: []
-  formattedActionName: (order) -> formatActionName order.user, order.type
-  formattedPrice: (order) -> kendo.toString order.price, 'c'
-  formattedOrderType: (order) -> formatOrderType order.type
+  clearOrders: ->
+    @viewModel.set 'orders', []
 
-$ ->
-  window.viewModel = new OrdersListViewModel()
-  window.aaa = new OrdersTable($('#example'), window.ws, window.viewModel)
+  pushOrder: (order) ->
+    @viewModel.get('orders').push order
+
+  removeOrder: (order) ->
+    orders = @viewModel.get('orders')
+    orders.splice(index, 1) for o, index in orders when o.id == order.id
+
+
+$ =>
+  createOrderMediator = new CreateOrderMediator $('#createOrderForm'), @ws
+  confirmOrderMediator = new ConfirmOrderMediator $('#confirmOrderForm'), @ws
+
+  @ordersTable = new OrdersTable($('#example'), createOrderMediator, confirmOrderMediator, new OrdersListViewModel)

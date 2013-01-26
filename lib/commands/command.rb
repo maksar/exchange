@@ -10,6 +10,9 @@ class Command
 
   def execute
     case action
+      when 'buy'
+      when 'sell'
+        ConfirmOrder.new(@order_book).execute params
       when 'createOrder'
         AddOrder.new(@order_book).execute params
       when 'cancel'

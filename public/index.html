@@ -7,11 +7,23 @@
   <link href="application.css" rel="stylesheet" />
 </head>
 <body>
+  <div id="confirmOrderForm" style="display:none">
+    <form>
+      <table>
+        <tr><td><label for="count" data-bind="text: formattedActionName"></label></td><td><input data-bind="value: count" data-value-update="keyup" placeholder="Enter Amount" type="number" step="1" class="amount" min='1' name="count" required/></td><td>of <span data-bind="text: order.stock"/></td></tr>
+        <tr><td><label>Total Order:</label></td><td><span data-bind="text: totalPrice"/></td><td></td></tr>
+      </table>
+    </form>
+    <div id="formActions">
+      <button class="k-button" id="create_order" data-bind="click: createOrder">Confirm</button>
+      <button class="k-button" id="cancel" data-bind="click: cancel">Cancel</button>
+    </div>
+  </div>
 
   <div id="createOrderForm" style="display:none">
     <form>
       <table>
-        <tr><td><label for="type">Order Type:</label></td><td><span id="type" data-bind="text: orderType"></td></tr>
+        <tr><td><label for="type">Order Type:</label></td><td><span id="type" data-bind="text: orderType"/></td></tr>
         <tr><td><label for="stock">Stock:</label></td><td><input data-bind="value: stock" placeholder="Enter Name" type="text" pattern="[A-Z]+" validationMessage="stock should be capital letters" required/></td></tr>
         <tr><td><label for="count">Amount:</label></td><td><input data-bind="value: count" placeholder="Enter Amount" type="number" step="1" class="amount" min='1' name="count" required/><span class="k-invalid-msg" data-for="count"></span></td></tr>
         <tr><td><label for="price">Price:</label></td><td><input data-bind="value: price" placeholder="Enter Price" type="number" step="1" class="currency" min='0.01' name="price" required/><span class="k-invalid-msg" data-for="price"></span></td></tr>
@@ -19,6 +31,7 @@
     </form>
     <div id="formActions">
       <button class="k-button" id="create_order" data-bind="click: createOrder">Create</button>
+      <button class="k-button" id="cancel" data-bind="click: cancel">Cancel</button>
     </div>
   </div>
 
@@ -58,6 +71,10 @@
 <script>
 
 window.currentUser = 'maksar'
+
+function formatPrice(price) {
+  return kendo.toString(price, 'c');
+}
 
 function formatOrderType(type) {
   switch (type) {
