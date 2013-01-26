@@ -1,6 +1,5 @@
 ENV["RAILS_ENV"] ||= 'test'
 require 'simplecov'
-require 'pry'
 
 SimpleCov.start do
   add_filter "/spec/spec_helper.rb"
