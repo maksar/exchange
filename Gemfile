@@ -9,3 +9,6 @@ gem 'minitest-ci'
 gem 'rake'
 
 gem 'em-websocket'
+
+gem 'goliath'
+gem 'sprockets'

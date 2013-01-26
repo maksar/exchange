@@ -7,6 +7,7 @@ $(function() {
     var data = JSON.parse(evt.data);
     for (var item in data.add) {
       viewModel.get('orders').push(data.add[item]);
+      viewModel.set('orders', viewModel.get('orders'));
     }
     for (var item in data.remove) {
       for (var elem in viewModel.get('orders')) {

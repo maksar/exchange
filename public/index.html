@@ -3,24 +3,12 @@
 <head>
   <title>Stock Exchange</title>
 
-  <script src="js/reconnecting-websocket.js"></script>
-  <script src="js/jquery.min.js"></script>
-  <script src="js/kendo.web.min.js"></script>
-
-  <script src="js/web-sockets.js"></script>
-  <script src="js/new-order.js.js"></script>
-  <script src="js/orders-list.js"></script>
-
-
-  <link href="css/kendo.common.min.css" rel="stylesheet" />
-  <link href="css/kendo.bootstrap.min.css" rel="stylesheet" />
-  <link href="css/examples.css" rel="stylesheet" />
-
-  <link href="css/custom.css" rel="stylesheet" />
+  <script src="application.js"></script>
+  <link href="application.css" rel="stylesheet" />
 </head>
 <body>
 
-  <div id="window" style="display:none">
+  <div id="createOrderForm" style="display:none">
     <form>
       <table>
         <tr><td><label for="type">Order Type:</label></td><td><span id="type" data-bind="text: orderType"></td></tr>
@@ -29,7 +17,9 @@
         <tr><td><label for="price">Price:</label></td><td><input data-bind="value: price" placeholder="Enter Price" type="number" step="1" class="currency" min='0.01' name="price" required/><span class="k-invalid-msg" data-for="price"></span></td></tr>
       </table>
     </form>
-    <button class="k-button" id="create_order" data-bind="click: createOrder">Create</button>
+    <div id="formActions">
+      <button class="k-button" id="create_order" data-bind="click: createOrder">Create</button>
+    </div>
   </div>
 
   <div id="example" class="k-content centerWrap">
@@ -48,8 +38,10 @@
       </table>
 
     </div>
-    <button class="k-button" data-bind="click: addOrder" data-type="sell">Ask</button>
-    <button class="k-button" data-bind="click: addOrder" data-type="buy">Bid</button>
+    <div id="tableActions">
+      <button class="k-button" data-bind="click: addOrder" data-type="sell">Ask</button>
+      <button class="k-button" data-bind="click: addOrder" data-type="buy">Bid</button>
+    </div>
   </div>
 </body>
 
