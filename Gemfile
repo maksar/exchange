@@ -12,3 +12,4 @@ gem 'em-websocket'
 
 gem 'goliath'
 gem 'sprockets'
+gem 'coffee-script'

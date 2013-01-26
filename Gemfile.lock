@@ -5,12 +5,18 @@ GEM
     async-rack (0.5.1)
       rack (~> 1.1)
     coderay (1.0.8)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.4.0)
     em-synchrony (1.0.3)
       eventmachine (>= 1.0.0.beta.1)
     em-websocket (0.3.8)
       addressable (>= 2.1.1)
       eventmachine (>= 0.12.9)
     eventmachine (1.0.0)
+    execjs (1.4.0)
+      multi_json (~> 1.0)
     goliath (1.0.1)
       async-rack
       em-synchrony (>= 1.0.0)
@@ -58,6 +64,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  coffee-script
   em-websocket
   goliath
   minitest
