@@ -1,13 +1,13 @@
 source "https://rubygems.org"
 
-gem 'rr'
-gem 'simplecov'
-gem 'pry'
-gem 'minitest'
-gem 'minitest-ci'
+group :test do
+  gem 'rr'
+  gem 'simplecov'
+  gem 'minitest'
+  gem 'minitest-ci'
+end
 
 gem 'rake'
-
 gem 'em-websocket'
 
 gem 'goliath'
