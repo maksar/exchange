@@ -5,7 +5,8 @@ describe SellProcess do
   let(:seller) { double 'seller' }
   let(:buyer) { double 'buyer' }
   let(:confirmation) { OpenStruct.new :count => 2, :order => OpenStruct.new(:stock => 'APPL', :price => 3 ) }
-  subject { SellProcess.new seller, buyer, confirmation }
+  let(:order_book) { double 'order book' }
+  subject { SellProcess.new order_book, seller, buyer, confirmation }
   it 'should contain seller, buyer and confirmation fields' do
     subject.seller.must_equal seller
     subject.buyer.must_equal buyer
@@ -27,7 +28,7 @@ describe SellProcess do
 
     mock(money_mover = double('money mover')).move 6
 
-    subject.perform sell_process_policy, stub!.move.subject, money_mover
+    subject.perform sell_process_policy, stub!.move.subject, money_mover, stub!.modify.subject
   end
 
   it 'moves stocks from seller to buyer' do
@@ -35,6 +36,14 @@ describe SellProcess do
 
     mock(stocks_mover = double('stocks mover')).move 'APPL', 2
 
-    subject.perform sell_process_policy, stocks_mover, stub!.move.subject
+    subject.perform sell_process_policy, stocks_mover, stub!.move.subject, stub!.modify.subject
+  end
+
+  it 'modifies an order after sell process' do
+    stub(sell_process_policy = double('sell process policy')).check
+
+    mock(order_modifier = double('order modifier')).modify confirmation.order, confirmation.count
+
+    subject.perform sell_process_policy, stub!.move.subject, stub!.move.subject, order_modifier
   end
 end
