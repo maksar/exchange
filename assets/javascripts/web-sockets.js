@@ -5,6 +5,9 @@ $(function() {
   }
   ws.onmessage = function(evt) {
     var data = JSON.parse(evt.data);
+    for (var item in data.change) {
+      ordersTable.changeOrder(data.change[item]);
+    }
     for (var item in data.add) {
       ordersTable.pushOrder(data.add[item]);
     }

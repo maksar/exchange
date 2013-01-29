@@ -36,7 +36,12 @@ class OrdersTable
 
   removeOrder: (order) ->
     orders = @viewModel.get('orders')
+    # TODO to a.shestakov Create find_by_id function in ViewModel
     orders.splice(index, 1) for o, index in orders when o.id == order.id
+
+  changeOrder: (order) ->
+    orders = @viewModel.get('orders')
+    orders.splice(index, 1, order) for o, index in orders when o.id == order.id
 
 
 $ =>

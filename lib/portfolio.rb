@@ -9,7 +9,8 @@ class Portfolio < Struct.new :stocks
   end
 
   def stocks_count name
-    find_stock(name).count
+    stock = find_stock(name)
+    stock ? stock.count : 0
   end
 
   private

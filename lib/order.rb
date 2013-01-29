@@ -2,8 +2,8 @@ require 'json/ext'
 require_relative 'user'
 
 class Order
-  attr_accessor :id
-  attr_reader :user, :stock, :count, :price
+  attr_accessor :id, :user, :stock, :count, :price
+  # attr_reader
 
   def initialize user, stock, count, price
     @user = user

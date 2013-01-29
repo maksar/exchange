@@ -16,11 +16,17 @@ class OrderBook
   def add order
     @orders << order
     order.id = next_sequence.tap { notify_add [order] }
+    order
   end
 
   def delete order
     @orders.delete order
     notify_remove [order]
+  end
+
+  def change id
+    order = find(id)
+    notify_change [order] if order
   end
 
   private

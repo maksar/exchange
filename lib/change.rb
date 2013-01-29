@@ -6,14 +6,24 @@ class Change
   def add
     {
       add: @data,
-      remove: []
+      remove: [],
+      change: []
     }.to_json
   end
 
   def remove
     {
       add: [],
-      remove: @data
+      remove: @data,
+      change: []
+    }.to_json
+  end
+
+  def change
+    {
+      add: [],
+      remove: [],
+      change: @data
     }.to_json
   end
 end
