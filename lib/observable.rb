@@ -1,32 +1,17 @@
 module Observable
-  # TODO to a.shestakov Generalize
-  def subscribe_add block
-    @handlers_add ||= []
-    @handlers_add << block
-  end
+  [:add, :remove, :change].each do |message|
+    class_eval <<-RUBY
+      def subscribe_#{message} block
+        @handlers_#{message} ||= []
+        @handlers_#{message} << block
+      end
 
-  def subscribe_remove block
-    @handlers_remove ||= []
-    @handlers_remove << block
-  end
+      protected
 
-  def subscribe_change block
-    @handlers_change ||= []
-    @handlers_change << block
-  end
-
-  protected
-
-  def notify_add change
-    execute @handlers_add, change
-  end
-
-  def notify_remove change
-    execute @handlers_remove, change
-  end
-
-  def notify_change change
-    execute @handlers_change, change
+      def notify_#{message} change
+        execute @handlers_#{message}, change
+      end
+    RUBY
   end
 
   private

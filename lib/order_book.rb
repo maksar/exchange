@@ -24,9 +24,8 @@ class OrderBook
     notify_remove [order]
   end
 
-  def change id
-    order = find(id)
-    notify_change [order] if order
+  def change order
+    notify_change [order]
   end
 
   private
