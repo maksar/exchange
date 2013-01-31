@@ -7,6 +7,7 @@
   <link href="application.css" rel="stylesheet" />
 </head>
 <body>
+
   <div id="confirmOrderForm" style="display:none">
     <form>
       <table>
@@ -14,6 +15,7 @@
         <tr><td><label>Total Order:</label></td><td><span data-bind="text: totalPrice"/></td><td></td></tr>
       </table>
     </form>
+
     <div id="formActions">
       <button class="k-button" id="create_order" data-bind="click: createOrder">Confirm</button>
       <button class="k-button" id="cancel" data-bind="click: cancel">Cancel</button>
@@ -56,7 +58,38 @@
       <button class="k-button" data-bind="click: addOrder" data-type="buy">Bid</button>
     </div>
   </div>
+
+  <div id="user-panel" class="k-content centerWrap">
+    <div class="demo-section">
+      <table>
+        <tr><td><span>Balance:</span></td><td><span data-bind="text: formattedBalance"/></td></tr>
+        <tr><td><span>Portfolio:</span></td><td>
+          <table>
+            <tbody data-template="portfolio-row-template" data-bind="source: stocks"></tbody>
+            <tfoot data-template="portfolio-footer-template" data-bind="source: this"></tfoot>
+          </table>
+        </td></tr>
+    </div>
+  </div>
+
+
 </body>
+
+<script id="portfolio-row-template" type="text/x-kendo-template">
+<tr>
+<td data-bind="text: name"/>
+<td data-bind="text: count"/>
+<td data-bind="text: formattedCost"/>
+</tr>
+</script>
+
+<script id="portfolio-footer-template" type="text/x-kendo-template">
+<tr>
+<td>Total:</td>
+<td/>
+<td data-bind="text: totalCost"/>
+</tr>
+</script>
 
 <script id="row-template" type="text/x-kendo-template">
 <tr>

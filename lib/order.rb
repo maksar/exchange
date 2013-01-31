@@ -15,7 +15,7 @@ class Order
   def to_json _
     {
       id: @id,
-      user: @user,
+      user: @user.name,
       stock: @stock,
       count: @count,
       price: @price,

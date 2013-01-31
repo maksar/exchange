@@ -2,10 +2,11 @@ require_relative '../spec_helper'
 require_relative '../../lib/order'
 
 describe Order do
-  subject { SellOrder.new 'user', 'APPL', 10, 1 }
+  let(:user) { OpenStruct.new(name: 'user') }
+  subject { SellOrder.new user, 'APPL', 10, 1 }
 
   it 'should have user, stock, count and price specified' do
-    subject.user.must_equal 'user'
+    subject.user.must_equal user
     subject.stock.must_equal 'APPL'
     subject.count.must_equal 10
     subject.price.must_equal 1

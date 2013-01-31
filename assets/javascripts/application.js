@@ -10,4 +10,5 @@
 //= require window
 
 //= require web-sockets
-//= require orders-list
+
+//= require start

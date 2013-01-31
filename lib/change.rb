@@ -1,29 +1,48 @@
 class Change
-  def initialize data
-    @data = data
+  def initialize orders, user
+    @orders = orders
+    @user = user
   end
 
   def add
     {
-      add: @data,
-      remove: [],
-      change: []
+      user: {
+        balance: @user.balance,
+        stocks: @user.stocks
+      },
+      orders: {
+        add: @orders,
+        remove: [],
+        change: []
+      }
     }.to_json
   end
 
   def remove
     {
-      add: [],
-      remove: @data,
-      change: []
+      user: {
+        balance: @user.balance,
+        stocks: @user.stocks
+      },
+      orders: {
+        add: [],
+        remove: @orders,
+        change: []
+      }
     }.to_json
   end
 
   def change
     {
-      add: [],
-      remove: [],
-      change: @data
+      user: {
+        balance: @user.balance,
+        stocks: @user.stocks
+      },
+      orders: {
+        add: [],
+        remove: [],
+        change: @orders
+      }
     }.to_json
   end
 end

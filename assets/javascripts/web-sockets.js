@@ -5,15 +5,16 @@ $(function() {
   }
   ws.onmessage = function(evt) {
     var data = JSON.parse(evt.data);
-    for (var item in data.change) {
-      ordersTable.changeOrder(data.change[item]);
+    for (var item in data.orders.change) {
+      ordersTable.changeOrder(data.orders.change[item]);
     }
-    for (var item in data.add) {
-      ordersTable.pushOrder(data.add[item]);
+    for (var item in data.orders.add) {
+      ordersTable.pushOrder(data.orders.add[item]);
     }
-    for (var item in data.remove) {
-      ordersTable.removeOrder(data.remove[item]);
+    for (var item in data.orders.remove) {
+      ordersTable.removeOrder(data.orders.remove[item]);
     }
-  }
 
+    userPanel.updateUser(data.user);
+  }
 });

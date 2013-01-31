@@ -6,8 +6,8 @@ require_relative '../lib/order_executor'
 
 describe 'main flow' do
   describe 'normal flow' do
-    let(:seller) { User.new Wallet.new(0.0), Portfolio.new([Stock.new('APPL', 100)]) }
-    let(:buyer) { User.new Wallet.new(10000.0), Portfolio.new([]) }
+    let(:seller) { User.new 'seller', Wallet.new(0.0), Portfolio.new([Stock.new('APPL', 100)]) }
+    let(:buyer) { User.new 'buyer', Wallet.new(10000.0), Portfolio.new([]) }
 
     let(:order_book) { OrderBook.new }
     before {

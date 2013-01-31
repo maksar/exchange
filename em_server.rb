@@ -5,8 +5,8 @@ require_relative 'lib/order_book'
 require_relative 'lib/commands/command'
 require_relative 'lib/change'
 
-$maksar = User.new Wallet.new(0.0), Portfolio.new([Stock.new('ITRA', 100)])
-$user = User.new Wallet.new(10000.0), Portfolio.new([])
+$maksar = User.new 'maksar', Wallet.new(0.0), Portfolio.new([Stock.new('ITRA', 100), Stock.new('APPL', 42)])
+$user = User.new 'user', Wallet.new(10000.0), Portfolio.new([])
 
 @order_book = OrderBook.new
 
@@ -17,9 +17,9 @@ $user = User.new Wallet.new(10000.0), Portfolio.new([])
 @orders_channel = EM::Channel.new
 
 # TODO to a.shestakov Replace with only one handler
-@order_book.subscribe_add ->(change) { @orders_channel.push Change.new(change).add }
-@order_book.subscribe_remove ->(change) { @orders_channel.push Change.new(change).remove }
-@order_book.subscribe_change ->(change) { @orders_channel.push Change.new(change).change }
+@order_book.subscribe_add ->(change) { @orders_channel.push Change.new(change, $maksar).add }
+@order_book.subscribe_remove ->(change) { @orders_channel.push Change.new(change, $maksar).remove }
+@order_book.subscribe_change ->(change) { @orders_channel.push Change.new(change, $maksar).change }
 
 @confirmation_queue = EM::Queue.new
 
@@ -38,7 +38,7 @@ EM.run {
       }
 
       # Sending all orders on first connection
-      ws.send Change.new(@order_book.orders).add
+      ws.send Change.new(@order_book.orders, $maksar).add
 
       ws.onmessage { |msg|
         EM.next_tick { Command.new(@order_book, @confirmation_queue, msg).execute }

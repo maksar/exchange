@@ -36,3 +36,10 @@ form label {
 .code-sample {
   clear: right;
 }
+
+#user-panel .demo-section {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+
+}

@@ -1,4 +1,4 @@
-class OrdersTable
+class @OrdersTableMediator
   constructor: (@table, @createOrderMediator, @confirmOrderMediator, @viewModel) ->
     @bindControls()
     @bindHandlers()
@@ -42,10 +42,3 @@ class OrdersTable
   changeOrder: (order) ->
     orders = @viewModel.get('orders')
     orders.splice(index, 1, order) for o, index in orders when o.id == order.id
-
-
-$ =>
-  createOrderMediator = new CreateOrderMediator $('#createOrderForm'), @ws
-  confirmOrderMediator = new ConfirmOrderMediator $('#confirmOrderForm'), @ws
-
-  @ordersTable = new OrdersTable($('#example'), createOrderMediator, confirmOrderMediator, new OrdersListViewModel)
