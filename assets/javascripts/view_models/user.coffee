@@ -1,6 +1,6 @@
 class @UserViewModel extends kendo.data.ObservableObject
   constructor: -> super @
-  balance: []
+  balance: 0
   stocks: []
   formattedBalance: => formatPrice @get('balance')
   cost: (stock) -> stock.get('price') * stock.get('count')

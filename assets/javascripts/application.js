@@ -9,6 +9,6 @@
 //= require validator
 //= require window
 
-//= require web-sockets
+//= require channel
 
 //= require start

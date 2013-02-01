@@ -1,7 +1,8 @@
 class @OrdersTableMediator
-  constructor: (@table, @createOrderMediator, @confirmOrderMediator, @viewModel) ->
+  constructor: (@table, @socket, @createOrderMediator, @confirmOrderMediator, @viewModel) ->
     @bindControls()
     @bindHandlers()
+    @bindEvents()
 
   bindControls: ->
     kendo.bind @table, @viewModel
@@ -9,6 +10,12 @@ class @OrdersTableMediator
       addOrder: @addOrder
 
   bindHandlers: -> @viewModel.action = @action
+
+  bindEvents: ->
+    @socket.onOrderChange = @changeOrder
+    @socket.onOrderAdd = @pushOrder
+    @socket.onOrderRemove = @removeOrder
+    @socket.onOrdersClear = @clearOrders
 
   action: (e) =>
     return @cancelOrder e.data if e.data.get('user') == window.currentUser
@@ -20,7 +27,7 @@ class @OrdersTableMediator
     @createOrderMediator.openWindow()
 
   cancelOrder: (order) ->
-    window.ws.send JSON.stringify
+    @socket.send JSON.stringify
       action: formatActionName(order.get('user'), order.get('type')).toLowerCase()
       params:
         id: order.get('id')
@@ -28,17 +35,17 @@ class @OrdersTableMediator
 
   serialize: (e) ->
 
-  clearOrders: ->
+  clearOrders: =>
     @viewModel.set 'orders', []
 
-  pushOrder: (order) ->
+  pushOrder: (order) =>
     @viewModel.get('orders').push order
 
-  removeOrder: (order) ->
+  removeOrder: (order) =>
     orders = @viewModel.get('orders')
     # TODO to a.shestakov Create find_by_id function in ViewModel
     orders.splice(index, 1) for o, index in orders when o.id == order.id
 
-  changeOrder: (order) ->
+  changeOrder: (order) =>
     orders = @viewModel.get('orders')
     orders.splice(index, 1, order) for o, index in orders when o.id == order.id

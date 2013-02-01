@@ -1,7 +1,9 @@
 $ =>
-  createOrderMediator = new CreateOrderMediator $('#createOrderForm'), @ws
-  confirmOrderMediator = new ConfirmOrderMediator $('#confirmOrderForm'), @ws
+  @channel = new Channel "ws://#{location.hostname}:8080/ws"
 
-  @ordersTable = new OrdersTableMediator($('#example'), createOrderMediator, confirmOrderMediator, new OrdersListViewModel)
+  createOrderMediator = new CreateOrderMediator $('#createOrderForm'), @channel.socket
+  confirmOrderMediator = new ConfirmOrderMediator $('#confirmOrderForm'), @channel.socket
 
-  @userPanel = new UserPanelMediator($('#user-panel'), new UserViewModel)
+  @ordersTable = new OrdersTableMediator($('#example'), @channel, createOrderMediator, confirmOrderMediator, new OrdersListViewModel)
+
+  @userPanel = new UserPanelMediator $('#user-panel'), @channel, new UserViewModel
